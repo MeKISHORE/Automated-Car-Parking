@@ -255,43 +255,77 @@ def inst():
 		clear()
 
 
-
+from PIL import ImageTk,Image
 root=Tk()
-root.geometry("1000x650+0+0")
+#root.geometry("1000x650+0+0")
 root.title("Automated Car Parking")
+image2 =Image.open('img.jpg')
+image1 = ImageTk.PhotoImage(image2)
+w = image1.width()
+h = image1.height()
+print(w)
+print(" ")
+print(h)
+root.geometry('%dx%d+0+0' % (1600,h))
 # root.configure(background="#2F4F4F")
-
-top=Frame(root,width=1000)
+top = Label(root, image=image1,  height=h)
 top.pack()
+#top=Frame(root,width=1000)
+#top.pack()
 
 labeltitle=Label(top,font=('arial',50,'bold'),text="Automated Car Parking",fg="steel blue")
-labeltitle.grid()
-loacltime=time.asctime(time.localtime(time.time()))
-labeldate=Label(top,font=('arial',30),text=loacltime,fg="black")
-labeldate.grid()
+labeltitle.place(x=400,y=0)
+#labeltitle.grid()
+dt=str(datetime.datetime.now().date())
+labeldate=Label(top,font=('arial',30),text=dt,fg="black",bg="grey")
+#labeldate.grid(row = 1, column = 1,padx = 5)
+labeldate.place(x=670,y=90)
+
+time1 = ''
+clock = Label(top, font=('times', 30, 'bold'), bg='grey')
+#clock.pack(fill=BOTH, expand=1)
+clock.place(x=700,y=150)
+def tick():
+    global time1
+    time2 = time.strftime('%H:%M:%S')
+    if time2 != time1:
+        time1 = time2
+        clock.config(text=time2)
+    clock.after(200, tick)
+tick()
+#loacltime=time.asctime(time.localtime(time.time()))
+#labeldate=Label(top,font=('arial',30),text=loacltime,fg="black")
+#labeldate.grid()
 
 
-mid=Frame(root,width=1400)
-mid.pack()
+#mid=Frame(root,width=1400)
+#mid.pack()
 # mid.configure(background="#708090")
-btn0 = Button(mid, text="camera", command=scan,font=('arial',15),width=20,bg="grey",fg="white")
-btn0.grid(row=0,column=1,pady = 15)
+btn0 = Button(top, text="camera", command=scan,font=('arial',15),width=20,bg="grey",fg="white")
+btn0.place(x=650, y=270)
+#btn0.grid(row=0,column=1,pady = 15)
 
-lbl1 = Label(mid, text="VECHICLE NO",font=('arial',23),anchor='w')
-lbl1.grid(row = 1, column = 0,padx = 5)
-Ent1 = Entry(mid,font=('arial',22))
-Ent1.grid(row = 1, column = 1, pady = 100)
+lbl1 = Label(top, text="VECHICLE NO",font=('arial',23),anchor='w')
+lbl1.place(x=370, y=318)
+#lbl1.grid(row = 1, column = 0,padx = 5)
+Ent1 = Entry(top,font=('arial',22))
+Ent1.place(x=600, y=320)
+#Ent1.grid(row = 1, column = 1, pady = 100)
 # txt1.bind("<Return>", clicked_scan)
-btn1 = Button(mid, text="SCAN", command=main,font=('arial',15),width=20,bg="grey",fg="white")
-btn1.grid(row=1,column=2,pady = 2 , padx = 5)
+btn1 = Button(top, text="SCAN", command=main,font=('arial',15),width=20,bg="grey",fg="white")
+btn1.place(x=950, y=320)
+#btn1.grid(row=1,column=2,pady = 2 , padx = 5)
 
-labl2=Label(mid, text="PARKING SLOT",font=('arial',23),anchor='w')
-labl2.grid(row=2 , column =1)
-Ent2 = Entry(mid,font=('arial',23))
-Ent2.grid(row = 3, column = 1)
+labl2=Label(top, text="PARKING SLOT",font=('arial',23),anchor='w')
+labl2.place(x=340, y=370)
+#labl2.grid(row=2 , column =1)
+Ent2 = Entry(top,font=('arial',23))
+Ent2.place(x=590, y=370)
+#Ent2.grid(row = 3, column = 1)
 
-btn2 = Button(mid, text="PRINT", command=inst,font=('arial',15),width=20,bg="grey",fg="white")
-btn2.grid(row=4,column=1,pady = 20)
+btn2 = Button(top, text="PRINT", command=inst,font=('arial',15),width=20,bg="grey",fg="white")
+btn2.place(x=650, y=430)
+#btn2.grid(row=4,column=1,pady = 20)
 
 
 root.mainloop()
